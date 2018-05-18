@@ -3448,6 +3448,22 @@ void cmGeneratorTarget::ConstructSourceFileFlags() const
       }
     }
   }
+
+  // Mark sources listed as resources.
+  if (const char* files = this->GetProperty("XCODE_EMBED_FRAMEWORKS")) {
+    std::vector<std::string> relFiles;
+    cmSystemTools::ExpandListArgument(files, relFiles);
+    for (std::string const& relFile : relFiles) {
+      if (cmSourceFile* sf = this->Makefile->GetSource(relFile)) {
+        SourceFileFlags& flags = this->SourceFlagsMap[sf];
+        flags.MacFolder = "";
+        if (!this->GlobalGenerator->ShouldStripResourcePath(this->Makefile)) {
+          flags.MacFolder = "Frameworks";
+        }
+        flags.Type = cmGeneratorTarget::SourceFileTypeFramework;
+      }
+    }
+  }
 }
 
 const cmGeneratorTarget::CompatibleInterfacesBase&

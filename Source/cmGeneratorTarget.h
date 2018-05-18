@@ -525,7 +525,8 @@ public:
                                  // has MACOSX_PACKAGE_LOCATION=="Resources"
     SourceFileTypeDeepResource,  // MACOSX_PACKAGE_LOCATION starts with
                                  // "Resources/"
-    SourceFileTypeMacContent     // has MACOSX_PACKAGE_LOCATION!="Resources[/]"
+    SourceFileTypeMacContent,    // has MACOSX_PACKAGE_LOCATION!="Resources[/]"
+    SourceFileTypeFramework
   };
   struct SourceFileFlags
   {
